@@ -56,7 +56,7 @@ namespace RestWithASPNETUdemy.Controllers
         }
 
         [HttpGet("div/{firstNumber}/{secondNumber}")]
-        public IActionResult Div(string firstNumber,string secondNumber)
+        public IActionResult Div(string firstNumber, string secondNumber)
         {
             if (NumberValidator(firstNumber, secondNumber))
             {
@@ -66,6 +66,31 @@ namespace RestWithASPNETUdemy.Controllers
 
             return BadRequest("Invalid Input");
         }
+
+        [HttpGet("pow/{firstNumber}/{secondNumber}")]
+        public IActionResult Pow(string firstNumber, string secondNumber)
+        {
+            if (NumberValidator(firstNumber, secondNumber))
+            {
+                var pow = System.Math.Pow((double)ConvertToDecimal(firstNumber), (double)ConvertToDecimal(secondNumber));
+                return Ok(pow.ToString());
+            }
+
+            return BadRequest("Invalid Input");
+        }
+
+        [HttpGet("sqrt/{number}")]
+        public IActionResult Sqrt(string number)
+        {
+            if (NumberValidator(number))
+            {
+                var sqrt = System.Math.Sqrt((double)ConvertToDecimal(number));
+                return Ok(sqrt.ToString());
+            }
+
+            return BadRequest("Invalid Input");
+        }
+
 
         private bool IsNumeric(string strNumber)
         {
@@ -90,7 +115,7 @@ namespace RestWithASPNETUdemy.Controllers
             return 0;
         }
 
-        private bool NumberValidator(string firstNumber, string secondNumber)
+        private bool NumberValidator(string firstNumber, string secondNumber = "1")
         {
             return IsNumeric(secondNumber) && IsNumeric(firstNumber);
         }
